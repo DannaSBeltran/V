@@ -1,0 +1,45 @@
+#Libraries required
+import mysql.connector
+from mysql.connector import Error
+from config import config
+
+# Method that allow connect to MySQL Server
+def create_connection(config):
+    connection = None
+    try:
+        connection = mysql.connector.connect(**config)
+        print("Connection has been successful!")
+    except Error as e:
+        print(f"This error '{e}'  occured")
+    return connection
+
+
+
+
+
+def update_employee(connection,nombre):
+    cursor = connection.cursor()
+    query = """
+    UPDATE nombre
+    SET nombre = %s,
+    WHERE nombre = %s
+    """
+    cursor.execute(query, (nombre))
+    connection.commit()
+    print(f"el nombre del artista {nombre} ha sido cambiada.")
+
+
+
+
+
+
+def main():
+    connection = create_connection(config)
+
+    # Calling method read
+    update_employee(connection,'rosalia' )
+
+
+
+if __name__ == "__main__":
+    main()
